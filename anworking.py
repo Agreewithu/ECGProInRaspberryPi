@@ -33,9 +33,9 @@ coeffs = pywt.wavedec(data=tdata, wavelet='db5', level=9)
 cA9, cD9, cD8, cD7, cD6, cD5, cD4, cD3, cD2, cD1 = coeffs
 threshold = (np.median(np.abs(cD1))/0.6745)*(np.sqrt(2*np.log(len(cD1))))
 cD1.fill(0)
-#cD2.fill(0)
+cD2.fill(0)
 #cD3.fill(0)
-for i in range(1, len(coeffs)-1):
+for i in range(1, len(coeffs)-2):
     coeffs[i]=pywt.threshold(coeffs[i], threshold)
 rdata = pywt.waverec(coeffs=coeffs, wavelet='db5')
 plt.figure(figsize=(20,6))
@@ -48,7 +48,7 @@ plt.title("new data")
 print("="*30)
 print("analysing heart rate ...")
 try:
-    wd,measures = heartpy.process(tdata,50)
+    wd,measures = heartpy.process(rdata,242)
     print(measures)
     peakAna = heartpy.plotter(wd,measures,show=False)
     peakAna.show()
