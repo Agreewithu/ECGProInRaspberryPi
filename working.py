@@ -7,9 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import heartpy
 import serial
+import time
 
 
 ser=serial.Serial('/dev/ttyUSB0',9600,timeout=1,parity=serial.PARITY_NONE,stopbits=1)
+
+time.sleep(30)
 
 data = []
 
@@ -18,7 +21,7 @@ while True:
     if x:
         str1 = x.decode('utf-8')
         data.append(str1)
-        if len(data) >= 5000:
+        if len(data) >= 1000:
             break
 
 with open(r'/home/ecg1013/Desktop/process/using_data.txt','w') as f:
